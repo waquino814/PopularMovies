@@ -17,7 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.wellingtonaquino.popularmovies.dataobjects.MovieDO;
 import org.wellingtonaquino.popularmovies.utils.ImageListAdapter;
 
@@ -57,24 +59,7 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
-        String[] eatFoodyImages = {
-                "http://i.imgur.com/rFLNqWI.jpg",
-                "http://i.imgur.com/C9pBVt7.jpg",
-                "http://i.imgur.com/rT5vXE1.jpg",
-                "http://i.imgur.com/aIy5R2k.jpg",
-                "http://i.imgur.com/MoJs9pT.jpg",
-                "http://i.imgur.com/S963yEM.jpg",
-                "http://i.imgur.com/rLR2cyc.jpg",
-                "http://i.imgur.com/SEPdUIx.jpg",
-                "http://i.imgur.com/aC9OjaM.jpg",
-                "http://i.imgur.com/76Jfv9b.jpg",
-                "http://i.imgur.com/fUX7EIB.jpg",
-                "http://i.imgur.com/syELajx.jpg",
-                "http://i.imgur.com/COzBnru.jpg",
-                "http://i.imgur.com/Z3QjilA.jpg",
-        };
-        mMoviesAdapter = new ImageListAdapter(getContext(), eatFoodyImages);
+        mMoviesAdapter = new ImageListAdapter(getContext(), new ArrayList<MovieDO>());
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_movies);
         listView.setAdapter(mMoviesAdapter);
         return rootView;
@@ -104,6 +89,13 @@ public class MainActivityFragment extends Fragment {
 
     public class FetchMoviesTaks extends AsyncTask<String,Void,List<MovieDO>>{
         private final String LOG_TAG = FetchMoviesTaks.class.getSimpleName();
+
+        @Override
+        protected void onPostExecute(List<MovieDO> movieDOs) {
+           // super.onPostExecute(movieDOs);
+            mMoviesAdapter.updateData(movieDOs);
+        }
+
         @Override
         protected List<MovieDO> doInBackground(String... params) {
             List<MovieDO> movies = new ArrayList<>();
@@ -112,9 +104,9 @@ public class MainActivityFragment extends Fragment {
             }
             String sortOrder = params[0];
             String sortPath ="popular";
-            if(sortOrder.equals(R.string.pref_sort_popular)){
+            if(sortOrder.equals(getString(R.string.pref_sort_popular))){
                 sortPath = "popular";
-            }else if (sortOrder.equals(R.string.pref_sort_top)){
+            }else if (sortOrder.equals(getString(R.string.pref_sort_top))){
                 sortPath = "top_rated";
             }
 
@@ -195,7 +187,18 @@ public class MainActivityFragment extends Fragment {
     }
 
     public List<MovieDO> getListMoviesFromJson(String jsonString) throws JSONException{
-        Log.d(LOG_TAG,jsonString);
-        return null;
+        List<MovieDO> movies = new ArrayList<>();
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONArray result = jsonObject.getJSONArray("results");
+        for (int i=0; i < result.length();i++) {
+            JSONObject temp = result.getJSONObject(i);
+            MovieDO movieTemp = new MovieDO();
+            movieTemp.setTitle(temp.getString("title"))
+                    .setId(temp.getLong("id"))
+                    .setOverview(temp.getString("overview"))
+                    .setPosterPath(temp.getString("poster_path"));
+            movies.add(movieTemp);
+        }
+        return movies;
     }
 }

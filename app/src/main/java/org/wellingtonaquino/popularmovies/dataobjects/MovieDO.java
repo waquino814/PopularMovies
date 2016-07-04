@@ -9,6 +9,9 @@ public class MovieDO {
     private String posterPath;
     private String overview;
 
+    public MovieDO() {
+    }
+
     public MovieDO(long id, String title, String posterPath, String overview) {
         this.id = id;
         this.title = title;
@@ -50,5 +53,15 @@ public class MovieDO {
     public MovieDO setOverview(String overview) {
         this.overview = overview;
         return this;
+    }
+
+    @Override
+    public String toString() {
+        return "MovieDO{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", posterPath='" + posterPath + '\'' +
+                ", overview='" + overview + '\'' +
+                '}';
     }
 }
