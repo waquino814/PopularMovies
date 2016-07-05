@@ -15,7 +15,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.AdapterView;
+import android.widget.GridView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,9 +60,18 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        mMoviesAdapter = new ImageListAdapter(getContext(), new ArrayList<MovieDO>());
-        ListView listView = (ListView) rootView.findViewById(R.id.list_view_movies);
-        listView.setAdapter(mMoviesAdapter);
+        mMoviesAdapter = ImageListAdapter.getInstance(getContext(), new ArrayList<MovieDO>());
+        GridView gridView = (GridView) rootView.findViewById(R.id.gridview_movies);
+        gridView.setAdapter(mMoviesAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(),DetailActivity.class)
+                        .setType("text/plain")
+                        .putExtra(Intent.EXTRA_TEXT,position);
+                startActivity(intent);
+            }
+        });
         return rootView;
     }
 

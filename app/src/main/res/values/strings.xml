@@ -17,4 +17,5 @@
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
+    <string name="title_activity_detail">DetailActivity</string>
 </resources>

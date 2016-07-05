@@ -8,11 +8,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="org.wellingtonaquino.popularmovies.MainActivityFragment"
     tools:showIn="@layout/activity_main">
-    <ListView
-        android:id="@+id/list_view_movies"
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/gridview_movies"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
-
-
+        android:layout_height="match_parent"
+        android:columnWidth="90dp"
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        />
 </RelativeLayout>
