@@ -8,15 +8,13 @@ public class MovieDO {
     private String title;
     private String posterPath;
     private String overview;
+    private String releaseDate;
+    private String voteAverage;
+    private String voteCount;
+
+
 
     public MovieDO() {
-    }
-
-    public MovieDO(long id, String title, String posterPath, String overview) {
-        this.id = id;
-        this.title = title;
-        this.posterPath = posterPath;
-        this.overview = overview;
     }
 
     public long getId() {
@@ -55,6 +53,33 @@ public class MovieDO {
         return this;
     }
 
+    public String getReleaseDate() {
+        return releaseDate;
+    }
+
+    public MovieDO setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
+        return this;
+    }
+
+    public String getVoteAverage() {
+        return voteAverage;
+    }
+
+    public MovieDO setVoteAverage(String voteAverage) {
+        this.voteAverage = voteAverage;
+        return this;
+    }
+
+    public String getVoteCount() {
+        return voteCount;
+    }
+
+    public MovieDO setVoteCount(String voteCount) {
+        this.voteCount = voteCount;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "MovieDO{" +
@@ -62,6 +87,9 @@ public class MovieDO {
                 ", title='" + title + '\'' +
                 ", posterPath='" + posterPath + '\'' +
                 ", overview='" + overview + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", voteAverage='" + voteAverage + '\'' +
+                ", voteCount='" + voteCount + '\'' +
                 '}';
     }
 }

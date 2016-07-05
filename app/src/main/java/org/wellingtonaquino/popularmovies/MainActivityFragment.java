@@ -206,6 +206,9 @@ public class MainActivityFragment extends Fragment {
             movieTemp.setTitle(temp.getString("title"))
                     .setId(temp.getLong("id"))
                     .setOverview(temp.getString("overview"))
+                    .setReleaseDate(temp.getString("release_date"))
+                    .setVoteAverage(temp.getString("vote_average"))
+                    .setVoteCount(temp.getString("vote_count"))
                     .setPosterPath(temp.getString("poster_path"));
             movies.add(movieTemp);
         }

@@ -6,7 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.wellingtonaquino.popularmovies.dataobjects.MovieDO;
 import org.wellingtonaquino.popularmovies.utils.ImageListAdapter;
@@ -28,7 +29,10 @@ public class DetailActivityFragment extends Fragment {
         if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
             int position = intent.getIntExtra(Intent.EXTRA_TEXT,-1);
             MovieDO movie = imageListAdapter.getMovieByPosition(position);
-            Toast.makeText(getContext(),movie.getTitle(),Toast.LENGTH_LONG).show();
+            ((TextView) rootView.findViewById(R.id.txtTitle)).setText(movie.getTitle());
+            ((TextView) rootView.findViewById(R.id.textOverView)).setText(movie.getOverview());
+            ImageView imgPoster = (ImageView) rootView.findViewById(R.id.imgPoster);
+            ImageListAdapter.loadImageIntoImageView(getContext(),imgPoster,ImageListAdapter.buildImageUrl("300",movie.getPosterPath()));
         }
         return rootView;
     }
